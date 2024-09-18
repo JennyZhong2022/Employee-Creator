@@ -1,66 +1,49 @@
-package nology.employee.employeeCreator;
+package nology.employee.employee;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import java.time.LocalDate;
+
+import org.hibernate.validator.constraints.Length;
+
 import jakarta.validation.constraints.Email;
-import nology.employee.common.BaseEntity;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
-@Entity
-@Table(name = "employee_creator")
-public class Employee {
+public class CreateEmployeeDTO {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-
-  @Column(columnDefinition = "TEXT")
+  @NotBlank(message = "First name is required.")
+  @Length(min = 2, max = 50, message = "First name must be between 2 and 50 characters long.")
   private String firstName;
 
-  @Column(columnDefinition = "TEXT")
+  @Length(max = 50, message = "Middle name must not exceed 50 characters.")
   private String middleName;
 
-  @Column(columnDefinition = "TEXT")
+  @NotBlank(message = "Last name is required.")
+  @Length(min = 2, max = 50, message = "Last name must be between 2 and 50 characters long.")
   private String lastName;
 
-  @Email
-  @Column(columnDefinition = "VARCHAR(255)")
+  @NotBlank(message = "Email is required.")
+  @Email(message = "Email should be valid.")
   private String email;
 
-  @Column(columnDefinition = "VARCHAR(15)")
+  @NotBlank(message = "Mobile number is required.")
+  @Length(min = 10, max = 15, message = "Mobile number should be between 10 and 15 digits.")
   private String mobile;
 
-  @Column(columnDefinition = "TEXT")
+  @NotBlank(message = "Employee status is required.")
   private String employeeStatus;
 
-  @Column(columnDefinition = "DATE")
-  private String startDate;
+  @NotNull(message = "Start date is required.")
+  private LocalDate startDate;
 
-  @Column(columnDefinition = "DATE")
-  private String finishDate;
+  private LocalDate finishDate; // no validation needed
 
-  @Column
   private Boolean ongoing;
 
-  @Column(columnDefinition = "TEXT")
+  @NotBlank(message = "Time basis is required.")
   private String timeBasis;
 
-  @Column
+  @NotNull(message = "Hours per week is required.")
   private Integer hoursPerWeek;
-
-  public Employee() {
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  // public void setId(Long id) {
-  // this.id = id;
-  // }
 
   public String getFirstName() {
     return firstName;
@@ -110,19 +93,19 @@ public class Employee {
     this.employeeStatus = employeeStatus;
   }
 
-  public String getStartDate() {
+  public LocalDate getStartDate() {
     return startDate;
   }
 
-  public void setStartDate(String startDate) {
+  public void setStartDate(LocalDate startDate) {
     this.startDate = startDate;
   }
 
-  public String getFinishDate() {
+  public LocalDate getFinishDate() {
     return finishDate;
   }
 
-  public void setFinishDate(String finishDate) {
+  public void setFinishDate(LocalDate finishDate) {
     this.finishDate = finishDate;
   }
 
