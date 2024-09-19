@@ -26,13 +26,13 @@ export const schema = z
     employeeStatus: z.enum(["Permanent", "Contract", "Casual"]),
     startDay: z.number().min(1).max(31),
     startMonth: monthEnum,
-    startYear: z.number().min(1900),
+    startYear: z.number().min(1900).max(2024),
     finishDay: z.number().min(1).max(31).nullable().optional(),
     finishMonth: monthEnum.nullable().optional(),
     finishYear: z.number().min(1900).nullable().optional(),
     onGoing: z.boolean().optional(),
     employmentBasis: z.enum(["Full-time", "Part-time"]),
-    hoursPerWeek: z.number().min(1).max(80),
+    hoursPerWeek: z.number().optional(),
   })
   .refine(
     (data) => {

@@ -173,6 +173,21 @@ const EmployeeForm = ({ onSubmit, formType, employee }: EmployeeFormProps) => {
               />
             </div>
           </div>
+          {errors.startDay && (
+            <small className={styles.error_text}>
+              {errors.startDay.message}
+            </small>
+          )}
+          {errors.startMonth && (
+            <small className={styles.error_text}>
+              {errors.startMonth.message}
+            </small>
+          )}
+          {errors.startYear && (
+            <small className={styles.error_text}>
+              {errors.startYear.message}
+            </small>
+          )}
         </div>
 
         <div className={styles.field}>
@@ -280,6 +295,11 @@ const EmployeeForm = ({ onSubmit, formType, employee }: EmployeeFormProps) => {
             id="hoursPerWeek"
             type="number"
           />
+          {errors.hoursPerWeek && (
+            <small className={styles.error_text}>
+              {errors.hoursPerWeek.message}
+            </small>
+          )}
         </div>
       </div>
 

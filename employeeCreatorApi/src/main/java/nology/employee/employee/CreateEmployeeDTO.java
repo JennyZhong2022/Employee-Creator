@@ -6,6 +6,7 @@ import java.time.Month;
 import org.hibernate.validator.constraints.Length;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -143,7 +144,7 @@ public class CreateEmployeeDTO {
   @NotBlank(message = "Employment basis is required.")
   private String employmentBasis;
 
-  @NotNull(message = "Hours per week is required.")
+  @Max(value = 50, message = "Hours per week cannot exceed 50")
   private Integer hoursPerWeek;
 
   public String getFirstName() {
