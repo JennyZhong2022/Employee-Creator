@@ -20,7 +20,7 @@ const EmployeeForm = ({ onSubmit, formType, employee }: EmployeeFormProps) => {
     resolver: zodResolver(schema),
     defaultValues: {
       ...employee,
-      // employmentBasis: employee?.employmentBasis || "Full-time",
+      employmentBasis: employee?.employmentBasis || "Full-time",
       startMonth: "January",
       onGoing: employee?.onGoing || false,
       finishDay: employee?.finishDay || null,
@@ -30,6 +30,8 @@ const EmployeeForm = ({ onSubmit, formType, employee }: EmployeeFormProps) => {
   });
 
   const isOngoing = watch("onGoing");
+
+  const isFullTime = watch("employmentBasis") === "Full-time";
 
   if (isSubmitSuccessful) reset();
 
@@ -291,9 +293,14 @@ const EmployeeForm = ({ onSubmit, formType, employee }: EmployeeFormProps) => {
         <div className={styles.field}>
           <label htmlFor="hoursPerWeek">Hours per week</label>
           <input
-            {...register("hoursPerWeek", { valueAsNumber: true })}
+            {...register("hoursPerWeek", {
+              valueAsNumber: true,
+              setValueAs: (v) =>
+                isFullTime ? null : v === "" ? null : Number(v),
+            })}
             id="hoursPerWeek"
             type="number"
+            disabled={isFullTime}
           />
           {errors.hoursPerWeek && (
             <small className={styles.error_text}>

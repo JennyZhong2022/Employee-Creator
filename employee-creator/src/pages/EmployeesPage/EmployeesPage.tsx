@@ -59,7 +59,11 @@ const EmployeesPage = () => {
         </div>
       </div>
       {employees.map((employee) => (
-        <EmployeeCard employee={employee} key={employee.id} />
+        <EmployeeCard
+          employee={employee}
+          key={employee.id}
+          onDelete={onDelete}
+        />
       ))}
     </div>
   );

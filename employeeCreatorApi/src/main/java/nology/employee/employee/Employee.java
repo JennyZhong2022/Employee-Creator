@@ -48,7 +48,7 @@ public class Employee {
   @Column(columnDefinition = "VARCHAR(50)")
   private String employmentBasis;
 
-  @Column(columnDefinition = "NUMBER")
+  @Column
   private Integer hoursPerWeek;
 
   public Employee() {

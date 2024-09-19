@@ -32,22 +32,30 @@ export const schema = z
     finishYear: z.number().min(1900).nullable().optional(),
     onGoing: z.boolean().optional(),
     employmentBasis: z.enum(["Full-time", "Part-time"]),
-    hoursPerWeek: z.number().optional(),
+    hoursPerWeek: z.number().min(1).max(38).optional(),
+  })
+  .refine((data) => {
+    if (data.onGoing) {
+      return true;
+    }
+    return (
+      data.finishDay !== null &&
+      data.finishMonth !== null &&
+      data.finishYear !== null
+    );
   })
   .refine(
     (data) => {
-      if (data.onGoing) {
+      // If employmentBasis is "Full-time", hoursPerWeek is optional
+      if (data.employmentBasis === "Full-time") {
         return true;
       }
-      return (
-        data.finishDay !== null &&
-        data.finishMonth !== null &&
-        data.finishYear !== null
-      );
+      // If it's not "Full-time", hoursPerWeek must be provided
+      return data.hoursPerWeek !== null && data.hoursPerWeek !== undefined;
     },
     {
-      message: "Finish date is required unless the employment is ongoing.",
-      path: ["finishDay", "finishMonth", "finishYear"],
+      message: "Hours per week is required unless the employment is full-time.",
+      path: ["hoursPerWeek"],
     }
   );
 
