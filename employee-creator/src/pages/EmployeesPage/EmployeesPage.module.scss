@@ -1,0 +1,43 @@
+.employeesList {
+  font-family: Arial, sans-serif;
+  padding: 20px 150px;
+
+  &__header {
+    background-color: #f5f5f5;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  &__title {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 0 20px 0;
+  }
+
+  &__subheader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  &__instruction {
+    color: #666;
+    font-size: 14px;
+  }
+
+  &__addButton {
+    background-color: #0052cc;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+
+    &:hover {
+      background-color: #0043a4;
+    }
+  }
+}

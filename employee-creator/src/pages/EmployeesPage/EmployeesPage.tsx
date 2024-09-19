@@ -3,10 +3,13 @@ import {
   deleteEmployeeById,
   EmployeeResponse,
   getAllEmployees,
-} from "../../services/todo-post";
-import EmployeeList from "../../components/EmployeeList/EmployeeList";
+} from "../../services/employee";
+import EmployeeCard from "../../components/EmployeeList/EmployeeCard";
+import styles from "./EmployeesPage.module.scss";
+import { useNavigate } from "react-router-dom";
 
 const EmployeesPage = () => {
+  const navigate = useNavigate();
   const [employees, setEmployees] = useState<EmployeeResponse[]>([]);
 
   useEffect(() => {
@@ -35,10 +38,28 @@ const EmployeesPage = () => {
     }
   };
 
+  const handleAddEmployee = () => {
+    navigate("/add-employee");
+  };
+
   return (
-    <div>
+    <div className={styles.employeesList}>
+      <div className={styles.employeesList__header}>
+        <h1 className={styles.employeesList__title}>Employees' list</h1>
+        <div className={styles.employeesList__subheader}>
+          <p className={styles.employeesList__instruction}>
+            Please click on "Edit" to find more details of each employee
+          </p>
+          <button
+            className={styles.employeesList__addButton}
+            onClick={handleAddEmployee}
+          >
+            Add employee
+          </button>
+        </div>
+      </div>
       {employees.map((employee) => (
-        <EmployeeList employee={employee} key={employee.id} />
+        <EmployeeCard employee={employee} key={employee.id} />
       ))}
     </div>
   );
