@@ -1,6 +1,7 @@
 package nology.employee.employee;
 
 import java.time.LocalDate;
+import java.time.Month;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -29,18 +30,118 @@ public class CreateEmployeeDTO {
   @Length(min = 10, max = 15, message = "Mobile number should be between 10 and 15 digits.")
   private String mobile;
 
+  @NotBlank(message = "Address is required.")
+  @Length(min = 2, max = 255, message = "Address must be detailed.")
+  private String address;
+
   @NotBlank(message = "Employee status is required.")
   private String employeeStatus;
 
-  @NotNull(message = "Start date is required.")
+  @NotNull(message = "Start day is required.")
+  private Integer startDay;
+
+  @NotNull(message = "Start month is required.")
+  private String startMonth; // Use String for ease, convert to Month in setter
+
+  @NotNull(message = "Start year is required.")
+  private Integer startYear;
+
   private LocalDate startDate;
+
+  // public void setStartDate(Integer day, String month, Integer year) {
+  // this.startDate = LocalDate.of(year, Month.valueOf(month.toUpperCase()), day);
+  // }
+
+  private Integer finishDay;
+
+  private String finishMonth;
+
+  private Integer finishYear;
+
+  // public void setFinishDate(Integer day, String month, Integer year) {
+  // if (day != null && month != null && year != null) {
+  // this.finishDate = LocalDate.of(year, Month.valueOf(month.toUpperCase()),
+  // day);
+  // } else {
+  // this.finishDate = null; // Handle partial or null input gracefully
+  // }
+  // }
+
+  private void updateStartDate() {
+    if (startDay != null && startMonth != null && startYear != null) {
+      startDate = LocalDate.of(startYear, Month.valueOf(startMonth.toUpperCase()), startDay);
+    }
+  }
+
+  public Integer getStartDay() {
+    return startDay;
+  }
+
+  public void setStartDay(Integer startDay) {
+    this.startDay = startDay;
+    updateStartDate();
+  }
+
+  public String getStartMonth() {
+    return startMonth;
+
+  }
+
+  public void setStartMonth(String startMonth) {
+    this.startMonth = startMonth;
+    updateStartDate();
+  }
+
+  public Integer getStartYear() {
+    return startYear;
+  }
+
+  public void setStartYear(Integer startYear) {
+    this.startYear = startYear;
+    updateStartDate();
+  }
+
+  private void updateFinishDate() {
+    if (finishDay != null && finishMonth != null && finishYear != null) {
+      finishDate = LocalDate.of(finishYear, Month.valueOf(finishMonth.toUpperCase()), finishDay);
+    } else {
+      finishDate = null;
+    }
+  }
+
+  public Integer getFinishDay() {
+    return finishDay;
+  }
+
+  public void setFinishDay(Integer finishDay) {
+    this.finishDay = finishDay;
+    updateFinishDate();
+  }
+
+  public String getFinishMonth() {
+    return finishMonth;
+  }
+
+  public void setFinishMonth(String finishMonth) {
+    this.finishMonth = finishMonth;
+    updateFinishDate();
+  }
+
+  public Integer getFinishYear() {
+    return finishYear;
+  }
+
+  public void setFinishYear(Integer finishYear) {
+    this.finishYear = finishYear;
+    updateFinishDate();
+  }
 
   private LocalDate finishDate; // no validation needed
 
   private Boolean ongoing;
 
-  @NotBlank(message = "Time basis is required.")
-  private String timeBasis;
+  @NotBlank(message = "Employment basis is required.")
+  private String employmentBasis;
 
   @NotNull(message = "Hours per week is required.")
   private Integer hoursPerWeek;
@@ -85,6 +186,14 @@ public class CreateEmployeeDTO {
     this.mobile = mobile;
   }
 
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
+
   public String getEmployeeStatus() {
     return employeeStatus;
   }
@@ -117,12 +226,12 @@ public class CreateEmployeeDTO {
     this.ongoing = ongoing;
   }
 
-  public String getTimeBasis() {
-    return timeBasis;
+  public String getEmploymentBasis() {
+    return employmentBasis;
   }
 
-  public void setTimeBasis(String timeBasis) {
-    this.timeBasis = timeBasis;
+  public void setEmploymentBasis(String employmentBasis) {
+    this.employmentBasis = employmentBasis;
   }
 
   public Integer getHoursPerWeek() {

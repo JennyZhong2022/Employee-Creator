@@ -45,8 +45,8 @@ public class Employee {
   @Column
   private Boolean ongoing;
 
-  @Column(columnDefinition = "TEXT")
-  private String timeBasis;
+  @Column(columnDefinition = "VARCHAR(50)")
+  private String employmentBasis;
 
   @Column
   private Integer hoursPerWeek;
@@ -102,6 +102,17 @@ public class Employee {
     this.mobile = mobile;
   }
 
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
+
+  @Column(columnDefinition = "VARCHAR(255)")
+  private String address;
+
   public String getEmployeeStatus() {
     return employeeStatus;
   }
@@ -134,20 +145,20 @@ public class Employee {
     this.ongoing = ongoing;
   }
 
-  public String getTimeBasis() {
-    return timeBasis;
-  }
-
-  public void setTimeBasis(String timeBasis) {
-    this.timeBasis = timeBasis;
-  }
-
   public Integer getHoursPerWeek() {
     return hoursPerWeek;
   }
 
   public void setHoursPerWeek(Integer hoursPerWeek) {
     this.hoursPerWeek = hoursPerWeek;
+  }
+
+  public String getEmploymentBasis() {
+    return employmentBasis;
+  }
+
+  public void setEmploymentBasis(String employmentBasis) {
+    this.employmentBasis = employmentBasis;
   }
 
 }
