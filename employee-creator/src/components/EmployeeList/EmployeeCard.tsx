@@ -3,10 +3,11 @@ import styles from "./EmployeeCard.module.scss";
 
 interface EmployeeCardProps {
   employee: EmployeeResponse;
-  onDelete: (id: number) => Promise<unknown>;
+  onDelete: (id: number, firstName: string, lastName: string) => void;
 }
 
 const EmployeeCard = ({ employee, onDelete }: EmployeeCardProps) => {
+  console.log(employee);
   return (
     <div className={styles.employeeCardContainer}>
       <div className={styles.employeeCard}>
@@ -15,12 +16,17 @@ const EmployeeCard = ({ employee, onDelete }: EmployeeCardProps) => {
             {employee.firstName} {employee.middleName} {employee.lastName}
           </div>
           <div className={styles.actions}>
-            <a href="#" className={styles.editLink}>
+            <a
+              href={`/employee/${employee.id}/edit`}
+              className={styles.editLink}
+            >
               Edit
             </a>{" "}
             <a
               className={styles.removeLink}
-              onClick={() => onDelete(employee.id)}
+              onClick={() =>
+                onDelete(employee.id, employee.firstName, employee.lastName)
+              }
             >
               Remove
             </a>

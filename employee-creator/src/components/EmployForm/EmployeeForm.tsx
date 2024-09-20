@@ -20,18 +20,18 @@ const EmployeeForm = ({ onSubmit, formType, employee }: EmployeeFormProps) => {
     resolver: zodResolver(schema),
     defaultValues: {
       ...employee,
-      employmentBasis: employee?.employmentBasis || "Full-time",
-      startMonth: "January",
-      onGoing: employee?.onGoing || false,
-      finishDay: employee?.finishDay || null,
-      finishMonth: employee?.finishMonth || null,
-      finishYear: employee?.finishYear || null,
+      // employmentBasis: employee?.employmentBasis || "Full-time",
+      // startMonth: "January",
+      // finishDay: employee?.finishDay || null,
+      // finishMonth: employee?.finishMonth || null,
+      // finishYear: employee?.finishYear || null,
+      // onGoing: employee?.onGoing || false,
     }, // Prefill form with previous data
   });
 
   const isOngoing = watch("onGoing");
 
-  const isFullTime = watch("employmentBasis") === "Full-time";
+  // const isFullTime = watch("employmentBasis") === "Full-time";
 
   if (isSubmitSuccessful) reset();
 
@@ -123,7 +123,7 @@ const EmployeeForm = ({ onSubmit, formType, employee }: EmployeeFormProps) => {
                 {...register("employeeStatus")}
                 value="Casual"
               />
-              Contract
+              Casual
             </label>
           </div>
           {errors.employeeStatus && (
@@ -200,8 +200,8 @@ const EmployeeForm = ({ onSubmit, formType, employee }: EmployeeFormProps) => {
               <input
                 {...register("finishDay", {
                   valueAsNumber: true,
-                  setValueAs: (v) =>
-                    isOngoing ? null : v === "" ? null : Number(v),
+                  // setValueAs: (v) =>
+                  //   isOngoing ? null : v === "" ? null : Number(v),
                 })}
                 id="finishDay"
                 type="number"
@@ -236,8 +236,8 @@ const EmployeeForm = ({ onSubmit, formType, employee }: EmployeeFormProps) => {
               <input
                 {...register("finishYear", {
                   valueAsNumber: true,
-                  setValueAs: (v) =>
-                    isOngoing ? null : v === "" ? null : Number(v),
+                  // setValueAs: (v) =>
+                  //   isOngoing ? null : v === "" ? null : Number(v),
                 })}
                 id="finishYear"
                 type="number"
@@ -295,12 +295,13 @@ const EmployeeForm = ({ onSubmit, formType, employee }: EmployeeFormProps) => {
           <input
             {...register("hoursPerWeek", {
               valueAsNumber: true,
-              setValueAs: (v) =>
-                isFullTime ? null : v === "" ? null : Number(v),
+              // setValueAs: (v) =>
+              //   isFullTime ? null : v === "" ? null : Number(v),
             })}
             id="hoursPerWeek"
             type="number"
-            disabled={isFullTime}
+            // disabled={isFullTime}
+            // placeholder={isFullTime ? "38" : ""}
           />
           {errors.hoursPerWeek && (
             <small className={styles.error_text}>

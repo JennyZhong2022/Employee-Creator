@@ -43,7 +43,7 @@ public class Employee {
   private String finishDate;
 
   @Column
-  private Boolean ongoing;
+  private Boolean onGoing;
 
   @Column(columnDefinition = "VARCHAR(50)")
   private String employmentBasis;
@@ -138,11 +138,11 @@ public class Employee {
   }
 
   public Boolean getOngoing() {
-    return ongoing;
+    return onGoing;
   }
 
-  public void setOngoing(Boolean ongoing) {
-    this.ongoing = ongoing;
+  public void setOngoing(Boolean onGoing) {
+    this.onGoing = onGoing;
   }
 
   public Integer getHoursPerWeek() {

@@ -33,7 +33,7 @@ public class UpdateEmployeeDTO {
 
   private LocalDate finishDate;
 
-  private Boolean ongoing;
+  private Boolean onGoing;
 
   private String timeBasis;
 
@@ -103,12 +103,12 @@ public class UpdateEmployeeDTO {
     this.finishDate = finishDate;
   }
 
-  public Boolean getOngoing() {
-    return ongoing;
+  public Boolean getOnGoing() {
+    return onGoing;
   }
 
-  public void setOngoing(Boolean ongoing) {
-    this.ongoing = ongoing;
+  public void setOnGoing(Boolean onGoing) {
+    this.onGoing = onGoing;
   }
 
   public String getTimeBasis() {

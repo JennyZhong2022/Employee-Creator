@@ -7,10 +7,21 @@ import {
 import EmployeeCard from "../../components/EmployeeList/EmployeeCard";
 import styles from "./EmployeesPage.module.scss";
 import { useNavigate } from "react-router-dom";
+import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 
 const EmployeesPage = () => {
   const navigate = useNavigate();
   const [employees, setEmployees] = useState<EmployeeResponse[]>([]);
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const [selectedEmployeeId, setSelectedEmployeeId] = useState<number | null>(
+    null
+  );
+  const [selectedEmployeeFirstName, setSelectedEmployeeFirstName] = useState<
+    string | null
+  >(null);
+  const [selectedEmployeeLastName, setSelectedEmployeeLastName] = useState<
+    string | null
+  >(null);
 
   useEffect(() => {
     getAllEmployees()
@@ -24,18 +35,31 @@ const EmployeesPage = () => {
 
   console.log("employees", employees);
 
-  const onDelete = async (id: number) => {
-    const confirmed = window.confirm("Are you sure?");
-    if (!confirmed) {
-      return;
-    }
-    const isConfirmed = await deleteEmployeeById(id).catch((e) => {
-      console.log(e);
-      return false;
-    });
+  const handleDelete = (id: number, firstName: string, lastName: string) => {
+    setSelectedEmployeeFirstName(firstName);
+    setSelectedEmployeeLastName(lastName);
+    setSelectedEmployeeId(id);
+    setOpenConfirmModal(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (selectedEmployeeId === null) return;
+
+    const isConfirmed = await deleteEmployeeById(selectedEmployeeId).catch(
+      (e) => {
+        console.log(e);
+        return false;
+      }
+    );
+
     if (isConfirmed) {
-      setEmployees(employees.filter((employee) => employee.id !== id));
+      setEmployees(
+        employees.filter((employee) => employee.id !== selectedEmployeeId)
+      );
     }
+
+    setOpenConfirmModal(false);
+    setSelectedEmployeeId(null);
   };
 
   const handleAddEmployee = () => {
@@ -62,9 +86,16 @@ const EmployeesPage = () => {
         <EmployeeCard
           employee={employee}
           key={employee.id}
-          onDelete={onDelete}
+          onDelete={handleDelete}
         />
       ))}
+      <ConfirmModal
+        isOpen={openConfirmModal}
+        onRequestClose={() => setOpenConfirmModal(false)}
+        onConfirm={handleConfirmDelete}
+        title="Delete Employee"
+        message={`Are you sure you want to delete ${selectedEmployeeFirstName} ${selectedEmployeeLastName}?`}
+      />
     </div>
   );
 };
