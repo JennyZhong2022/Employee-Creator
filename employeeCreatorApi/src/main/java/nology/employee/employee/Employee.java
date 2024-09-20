@@ -1,5 +1,7 @@
 package nology.employee.employee;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,10 +39,10 @@ public class Employee {
   private String employeeStatus;
 
   @Column(columnDefinition = "DATE")
-  private String startDate;
+  private LocalDate startDate;
 
   @Column(columnDefinition = "DATE")
-  private String finishDate;
+  private LocalDate finishDate;
 
   @Column
   private Boolean onGoing;
@@ -121,27 +123,27 @@ public class Employee {
     this.employeeStatus = employeeStatus;
   }
 
-  public String getStartDate() {
+  public LocalDate getStartDate() {
     return startDate;
   }
 
-  public void setStartDate(String startDate) {
+  public void setStartDate(LocalDate startDate) {
     this.startDate = startDate;
   }
 
-  public String getFinishDate() {
+  public LocalDate getFinishDate() {
     return finishDate;
   }
 
-  public void setFinishDate(String finishDate) {
+  public void setFinishDate(LocalDate finishDate) {
     this.finishDate = finishDate;
   }
 
-  public Boolean getOngoing() {
+  public Boolean getOnGoing() {
     return onGoing;
   }
 
-  public void setOngoing(Boolean onGoing) {
+  public void setOnGoing(Boolean onGoing) {
     this.onGoing = onGoing;
   }
 
