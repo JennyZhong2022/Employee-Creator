@@ -1,4 +1,5 @@
 import { EmployeeFormData } from "../components/EmployForm/schema";
+import axios from "axios";
 
 const baseURL = import.meta.env.VITE_APP_API_BASE_URL;
 
@@ -53,70 +54,72 @@ export function transformEmployeeData(
     hoursPerWeek: employee.hoursPerWeek || null,
   };
 }
-
 export const getAllEmployees = async () => {
-  const response = await fetch(baseURL + "/employees");
-  if (!response.ok) {
-    throw new Error("Failed to fetch");
+  try {
+    const response = await axios.get(`${baseURL}/employees`);
+    return response.data as EmployeeResponse[];
+  } catch (error) {
+    throw new Error("Failed to fetch employees");
   }
-  return (await response.json()) as EmployeeResponse[];
 };
 
+// Create a new employee
 export const createEmployee = async (data: EmployeeFormData) => {
-  const response = await fetch(baseURL + "/employees", {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  if (!response.ok) {
-    throw new Error("Failed to fetch");
+  try {
+    const response = await axios.post(`${baseURL}/employees`, data, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data as EmployeeResponse;
+  } catch (error) {
+    throw new Error("Failed to create employee");
   }
-  return (await response.json()) as EmployeeResponse;
 };
 
+// Fetch employee by ID
 export const getEmployeeById = async (id: number) => {
-  const response = await fetch(baseURL + `/employees/${id}`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch");
+  try {
+    const response = await axios.get(`${baseURL}/employees/${id}`);
+    return response.data as EmployeeResponse;
+  } catch (error) {
+    throw new Error("Failed to fetch employee by ID");
   }
-  return (await response.json()) as EmployeeResponse;
 };
 
+// Update employee by ID
 export const updateEmployeeById = async (
   id: number,
   data: EmployeeFormData
 ) => {
-  const response = await fetch(baseURL + `/employees/${id}`, {
-    method: "PATCH",
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  if (!response.ok) {
-    throw new Error("Failed to fetch");
+  try {
+    const response = await axios.patch(`${baseURL}/employees/${id}`, data, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data as EmployeeResponse;
+  } catch (error) {
+    throw new Error("Failed to update employee");
   }
-  return (await response.json()) as EmployeeResponse;
 };
 
+// Delete employee by ID
 export const deleteEmployeeById = async (id: number) => {
-  const response = await fetch(baseURL + `/employees/${id}`, {
-    method: "DELETE",
-  });
-  if (!response.ok) {
-    throw new Error("Failed to fetch");
+  try {
+    await axios.delete(`${baseURL}/employees/${id}`);
+    return true;
+  } catch (error) {
+    throw new Error("Failed to delete employee");
   }
-  return true;
 };
 
+// Delete all employees
 export const deleteAllEmployee = async () => {
-  const response = await fetch(baseURL + "/employees", {
-    method: "DELETE",
-  });
-  if (!response.ok) {
-    throw new Error("Failed to fetch");
+  try {
+    await axios.delete(`${baseURL}/employees`);
+    return true;
+  } catch (error) {
+    throw new Error("Failed to delete all employees");
   }
-  return true;
 };

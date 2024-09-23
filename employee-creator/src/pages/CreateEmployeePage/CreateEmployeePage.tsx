@@ -9,6 +9,7 @@ const CreateEmployeePage = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data: EmployeeFormData) => {
+    console.log("data", data);
     createEmployee(data)
       .then(() => {
         navigate("/");
