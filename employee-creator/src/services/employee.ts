@@ -123,3 +123,14 @@ export const deleteAllEmployee = async () => {
     throw new Error("Failed to delete all employees");
   }
 };
+
+export const searchForEmployeeName = async (employeeName: string) => {
+  try {
+    const response = await axios.get(
+      `${baseURL}/employees/name/${employeeName}`
+    );
+    return response.data as EmployeeResponse[];
+  } catch (error) {
+    throw new Error("Failed to search employee");
+  }
+};

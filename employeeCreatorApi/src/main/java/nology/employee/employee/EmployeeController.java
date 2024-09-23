@@ -46,6 +46,15 @@ public class EmployeeController {
     return new ResponseEntity<>(foundEmployee, HttpStatus.OK);
   }
 
+  @GetMapping("/name/{name}")
+  public ResponseEntity<List<Employee>> findEmployeeByName(@PathVariable String name) throws NotFoundException {
+    List<Employee> employees = this.employeeService.findEmployeesByName(name);
+    if (employees.isEmpty()) {
+      throw new NotFoundException("Couldn't find any employees with name: " + name);
+    }
+    return new ResponseEntity<>(employees, HttpStatus.OK);
+  }
+
   @PatchMapping("/{id}")
   public ResponseEntity<Employee> updateEmployeeById(@PathVariable Long id,
       @Valid @RequestBody UpdateEmployeeDTO data) throws Exception {

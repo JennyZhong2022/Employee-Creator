@@ -11,6 +11,12 @@
     margin-bottom: 20px;
   }
 
+  &__navBar {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
   &__title {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 24px;
@@ -46,5 +52,15 @@
     @media screen and (max-width: 480px) {
       padding: 5px 5px;
     }
+  }
+  &__loading,
+  &__errorMessage {
+    margin-top: 15vh;
+    text-align: center;
+  }
+
+  &__errorMessage {
+    font-size: large;
+    color: rgb(237, 110, 110);
   }
 }

@@ -4,14 +4,18 @@ import CreateEmployeePage from "./pages/CreateEmployeePage/CreateEmployeePage";
 import EmployeesPage from "./pages/EmployeesPage/EmployeesPage";
 import EditEmployeePage from "./pages/EditEmployeePage/EditEmployeePage";
 
+import SearchQueryContextProvider from "./context/SearchQueryContextProvider";
+
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<EmployeesPage />} />
-        <Route path="/add-employee" element={<CreateEmployeePage />} />
-        <Route path="/employee/:id/edit" element={<EditEmployeePage />} />
-      </Routes>
+      <SearchQueryContextProvider>
+        <Routes>
+          <Route path="/" element={<EmployeesPage />} />
+          <Route path="/add-employee" element={<CreateEmployeePage />} />
+          <Route path="/employee/:id/edit" element={<EditEmployeePage />} />
+        </Routes>
+      </SearchQueryContextProvider>
     </BrowserRouter>
   );
 }
