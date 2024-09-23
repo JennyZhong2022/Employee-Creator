@@ -3,7 +3,7 @@ import { createEmployee } from "../../services/employee";
 
 import { EmployeeFormData } from "../../components/EmployForm/schema";
 import EmployeeForm from "../../components/EmployForm/EmployeeForm";
-import styles from "./CreateEmployee.module.scss";
+// import styles from "./CreateEmployee.module.scss";
 
 const CreateEmployeePage = () => {
   const navigate = useNavigate();
@@ -18,11 +18,7 @@ const CreateEmployeePage = () => {
   };
 
   return (
-    <div className={styles.employeeDetailsContainer}>
-      <div className={styles.header}>
-        <a href="/">Back</a>
-        <h2 className={styles.title}>Employee details</h2>
-      </div>
+    <div>
       <EmployeeForm onSubmit={onSubmit} formType="create" />
     </div>
   );
