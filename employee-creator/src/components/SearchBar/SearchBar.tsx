@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../Redux/store";
-import { setSearchTerm } from "../../Redux/searchSlice";
+import { AppDispatch, RootState } from "../../redux/store";
+import { setSearchTerm } from "../../redux/searchSlice";
 
 const SearchBar = () => {
   const dispatch: AppDispatch = useDispatch();

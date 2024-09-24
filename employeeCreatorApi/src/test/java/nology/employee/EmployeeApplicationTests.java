@@ -1,10 +1,10 @@
-package nology.todolist;
+package nology.employee;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TodolistApplicationTests {
+class EmployeeApplicationTests {
 
 	@Test
 	void contextLoads() {

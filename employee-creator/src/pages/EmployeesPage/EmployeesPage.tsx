@@ -9,14 +9,14 @@ import {
 import EmployeeCard from "../../components/EmployeeCard/EmployeeCard";
 import styles from "./EmployeesPage.module.scss";
 import { useNavigate } from "react-router-dom";
-import ConfirmModal from "../../Modals/ConfirmModal/ConfirmModal";
+import ConfirmModal from "../../modals/ConfirmModal/ConfirmModal";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import FilterModal from "../../Modals/FilterModal/FilterModal";
-import { AppDispatch, RootState } from "../../Redux/store";
+import FilterModal from "../../modals/FilterModal/FilterModal";
+import { AppDispatch, RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchTerm } from "../../Redux/searchSlice";
+import { setSearchTerm } from "../../redux/searchSlice";
 const EmployeesPage = () => {
   const navigate = useNavigate();
   const [employees, setEmployees] = useState<EmployeeResponse[]>([]);
