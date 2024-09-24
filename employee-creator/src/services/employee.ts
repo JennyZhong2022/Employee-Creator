@@ -54,6 +54,7 @@ export function transformEmployeeData(
     hoursPerWeek: employee.hoursPerWeek || null,
   };
 }
+
 export const getAllEmployees = async () => {
   try {
     const response = await axios.get(`${baseURL}/employees`);

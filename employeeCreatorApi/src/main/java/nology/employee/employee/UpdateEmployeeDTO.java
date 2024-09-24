@@ -176,11 +176,11 @@ public class UpdateEmployeeDTO {
     this.finishDate = finishDate;
   }
 
-  public Boolean getOngoing() {
+  public Boolean getOnGoing() {
     return onGoing;
   }
 
-  public void setOngoing(Boolean onGoing) {
+  public void setOnGoing(Boolean onGoing) {
     this.onGoing = onGoing;
   }
 
