@@ -1,27 +1,26 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import styles from "./SearchBar.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { SearchQueryContext } from "../../context/SearchQueryContextProvider";
+
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../Redux/store";
+import { setSearchTerm } from "../../Redux/searchSlice";
 
 const SearchBar = () => {
-  const { searchTerm, setSearchTerm } = useContext(SearchQueryContext);
+  const dispatch: AppDispatch = useDispatch();
+  const searchTerm = useSelector((state: RootState) => state.search.searchTerm);
+
   const [inputValue, setInputValue] = useState<string>("");
-  const [employmentStatus, setEmploymentStatus] = useState("");
 
   const handleSubmit = (e: any): void => {
     e.preventDefault();
-    setSearchTerm(inputValue.toLowerCase());
+    dispatch(setSearchTerm(inputValue.toLowerCase()));
 
-    setInputValue("");
-  };
-
-  const handleStatusChange = (e: any): void => {
-    setEmploymentStatus(e.target.value);
+    // setInputValue("");
   };
 
   console.log("searchTerm", searchTerm);
-  // console.log(inputValue);
 
   return (
     <form className={styles.searchForm} onSubmit={handleSubmit}>

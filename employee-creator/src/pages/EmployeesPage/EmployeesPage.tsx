@@ -11,11 +11,12 @@ import styles from "./EmployeesPage.module.scss";
 import { useNavigate } from "react-router-dom";
 import ConfirmModal from "../../Modals/ConfirmModal/ConfirmModal";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import { SearchQueryContext } from "../../context/SearchQueryContextProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import FilterModal from "../../Modals/FilterModal/FilterModal";
-
+import { AppDispatch, RootState } from "../../Redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearchTerm } from "../../Redux/searchSlice";
 const EmployeesPage = () => {
   const navigate = useNavigate();
   const [employees, setEmployees] = useState<EmployeeResponse[]>([]);
@@ -23,7 +24,8 @@ const EmployeesPage = () => {
 
   const [openFilterModal, setOpenFilterModal] = useState(false);
   const [employmentStatus, setEmploymentStatus] = useState<string>("");
-  const { searchTerm, setSearchTerm } = useContext(SearchQueryContext);
+  const dispatch: AppDispatch = useDispatch();
+  const searchTerm = useSelector((state: RootState) => state.search.searchTerm);
   const [searchedEmployees, setSearchedEmployees] = useState<
     EmployeeResponse[]
   >([]);
@@ -61,7 +63,7 @@ const EmployeesPage = () => {
       const data = await getAllEmployees();
       setEmployees(data);
       setSearchedEmployees([]);
-      setSearchTerm("");
+      dispatch(setSearchTerm(""));
     } catch (error) {
       console.error("Failed to fetch all employees", error);
       setError("Failed to fetch all employees");
