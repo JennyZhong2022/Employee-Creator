@@ -41,17 +41,24 @@ export const schema = z.object({
   startDay: z.number().min(1).max(31),
   startMonth: monthEnum,
   startYear: z.number().min(1900).max(new Date().getFullYear()),
-  finishDay: z.number().min(1).max(31).nullable().optional(),
-  finishMonth: monthEnum.nullable().optional(),
-  finishYear: z
-    .number()
-    .min(1900)
-    .max(new Date().getFullYear() + 100)
-    .nullable()
-    .optional(),
+  finishDay: z.union([
+    z.coerce.number().min(1).max(31),
+    z.literal("").transform(() => null),
+  ]),
+  finishMonth: z.union([monthEnum, z.literal("").transform(() => null)]),
+  finishYear: z.union([
+    z.coerce
+      .number()
+      .min(1900)
+      .max(new Date().getFullYear() + 100),
+    z.literal("").transform(() => null),
+  ]),
   onGoing: z.boolean(),
   employmentBasis: z.enum(["Full-time", "Part-time"]),
-  hoursPerWeek: z.number().min(1).max(38).nullable(),
+  hoursPerWeek: z.union([
+    z.coerce.number().min(1).max(38),
+    z.literal("").transform(() => null),
+  ]),
 });
 // .refine((data) => {
 //   if (data.onGoing) {

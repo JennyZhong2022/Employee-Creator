@@ -2,6 +2,7 @@ import { schema, EmployeeFormData } from "./schema";
 import styles from "./EmployeeForm.module.scss";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import React from "react";
 
 interface EmployeeFormProps {
   formType: "create" | "edit";
@@ -14,24 +15,30 @@ const EmployeeForm = ({ onSubmit, formType, employee }: EmployeeFormProps) => {
     reset,
     register,
     watch,
+    setValue,
     formState: { errors, isSubmitSuccessful },
     handleSubmit,
   } = useForm<EmployeeFormData>({
     resolver: zodResolver(schema),
     defaultValues: {
       ...employee,
-      // employmentBasis: employee?.employmentBasis || "Full-time",
-      // startMonth: "January",
-      // finishDay: employee?.finishDay || null,
-      // finishMonth: employee?.finishMonth || null,
-      // finishYear: employee?.finishYear || null,
-      // onGoing: employee?.onGoing || false,
+      employmentBasis: employee?.employmentBasis || "Full-time",
+      hoursPerWeek:
+        employee?.employmentBasis === "Full-time" ? 38 : employee?.hoursPerWeek,
     }, // Prefill form with previous data
   });
 
   const isOngoing = watch("onGoing");
 
-  // const isFullTime = watch("employmentBasis") === "Full-time";
+  const employmentBasis = watch("employmentBasis");
+
+  React.useEffect(() => {
+    if (employmentBasis === "Full-time") {
+      setValue("hoursPerWeek", 38);
+    } else {
+      setValue("hoursPerWeek", employee?.hoursPerWeek || null);
+    }
+  }, [employmentBasis, setValue, employee?.hoursPerWeek]);
 
   if (isSubmitSuccessful) reset();
 
@@ -214,7 +221,7 @@ const EmployeeForm = ({ onSubmit, formType, employee }: EmployeeFormProps) => {
                 <label htmlFor="finishDay">Day</label>
                 <input
                   {...register("finishDay", {
-                    valueAsNumber: true,
+                    // valueAsNumber: true,
                     // setValueAs: (v) =>
                     //   isOngoing ? null : v === "" ? null : Number(v),
                   })}
@@ -227,7 +234,7 @@ const EmployeeForm = ({ onSubmit, formType, employee }: EmployeeFormProps) => {
                 <label htmlFor="finishMonth">Month</label>
                 <select
                   {...register("finishMonth", {
-                    setValueAs: (v) => (isOngoing ? null : v),
+                    // setValueAs: (v) => (isOngoing ? null : v),
                   })}
                   id="finishMonth"
                   disabled={isOngoing}
@@ -250,7 +257,7 @@ const EmployeeForm = ({ onSubmit, formType, employee }: EmployeeFormProps) => {
                 <label htmlFor="finishYear">Year</label>
                 <input
                   {...register("finishYear", {
-                    valueAsNumber: true,
+                    // valueAsNumber: true,
                     // setValueAs: (v) =>
                     //   isOngoing ? null : v === "" ? null : Number(v),
                   })}
@@ -308,15 +315,11 @@ const EmployeeForm = ({ onSubmit, formType, employee }: EmployeeFormProps) => {
           <div className={styles.field}>
             <label htmlFor="hoursPerWeek">Hours per week</label>
             <input
-              {...register("hoursPerWeek", {
-                valueAsNumber: true,
-                // setValueAs: (v) =>
-                //   isFullTime ? null : v === "" ? null : Number(v),
-              })}
+              {...register("hoursPerWeek", {})}
               id="hoursPerWeek"
               type="number"
-              // disabled={isFullTime}
-              // placeholder={isFullTime ? "38" : ""}
+              disabled={employmentBasis === "Full-time"}
+              placeholder={employmentBasis === "Full-time" ? "38" : ""}
             />
             {errors.hoursPerWeek && (
               <small className={styles.error_text}>

@@ -142,6 +142,7 @@ const EmployeesPage = () => {
         >
           All Employees
         </button>
+
         <SearchBar />
       </div>
       {loading && (
