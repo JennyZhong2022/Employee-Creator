@@ -134,3 +134,12 @@ export const searchForEmployeeName = async (employeeName: string) => {
     throw new Error("Failed to search employee");
   }
 };
+
+export const searchForEmployeeNameByEmployeeStatus = async (status: string) => {
+  try {
+    const response = await axios.get(`${baseURL}/employees/status/${status}`);
+    return response.data as EmployeeResponse[];
+  } catch (error) {
+    throw new Error(`Failed to search employee with status: + ${status}"`);
+  }
+};

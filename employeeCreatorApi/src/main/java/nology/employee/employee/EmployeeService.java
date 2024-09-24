@@ -82,4 +82,8 @@ public class EmployeeService {
     return repo.findByAnyName(name);
   }
 
+  public List<Employee> findEmployeesByStatus(String status) {
+    return repo.findByEmployeeStatus(status);
+  }
+
 }

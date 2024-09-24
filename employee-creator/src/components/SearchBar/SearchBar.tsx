@@ -25,22 +25,12 @@ const SearchBar = () => {
 
   return (
     <form className={styles.searchForm} onSubmit={handleSubmit}>
-      <select
-        className={styles.statusSelect}
-        value={employmentStatus}
-        onChange={handleStatusChange}
-      >
-        <option value="">All</option>
-        <option value="Permanent">Permanent</option>
-        <option value="Contract">Contract</option>
-        <option value="Casual">Casual</option>
-      </select>
       <input
         type="text"
         className={styles.searchInput}
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
-        placeholder="Search..."
+        placeholder="Search name..."
       />
 
       <button className={styles.searchButton} type="submit">

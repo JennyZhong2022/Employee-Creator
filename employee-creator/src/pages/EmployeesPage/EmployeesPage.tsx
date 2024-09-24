@@ -4,20 +4,25 @@ import {
   EmployeeResponse,
   getAllEmployees,
   searchForEmployeeName,
+  searchForEmployeeNameByEmployeeStatus,
 } from "../../services/employee";
-import EmployeeCard from "../../components/EmployeeList/EmployeeCard";
+import EmployeeCard from "../../components/EmployeeCard/EmployeeCard";
 import styles from "./EmployeesPage.module.scss";
 import { useNavigate } from "react-router-dom";
-import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
+import ConfirmModal from "../../Modals/ConfirmModal/ConfirmModal";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import { SearchQueryContext } from "../../context/SearchQueryContextProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import FilterModal from "../../Modals/FilterModal/FilterModal";
 
 const EmployeesPage = () => {
   const navigate = useNavigate();
   const [employees, setEmployees] = useState<EmployeeResponse[]>([]);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
+
+  const [openFilterModal, setOpenFilterModal] = useState(false);
+  const [employmentStatus, setEmploymentStatus] = useState<string>("");
   const { searchTerm, setSearchTerm } = useContext(SearchQueryContext);
   const [searchedEmployees, setSearchedEmployees] = useState<
     EmployeeResponse[]
@@ -118,6 +123,30 @@ const EmployeesPage = () => {
     navigate("/add-employee");
   };
 
+  const handleStatusChange = (e: any): void => {
+    setEmploymentStatus(e.target.value);
+  };
+
+  const handleFilter = () => {
+    if (!employmentStatus || employmentStatus === "") {
+      handleGetAllEmployees(); // Reset to show all if 'All' is selected
+    } else {
+      setLoading(true);
+      setError(null);
+      searchForEmployeeNameByEmployeeStatus(employmentStatus)
+        .then((data) => {
+          setEmployees(data);
+          setLoading(false);
+        })
+        .catch((e) => {
+          console.error("Failed to fetch employees by status", e);
+          setError(`Can't find employees with status "${employmentStatus}"`);
+          setLoading(false);
+        });
+    }
+    setOpenFilterModal(false);
+  };
+
   return (
     <div className={styles.employeesList}>
       <div className={styles.employeesList__header}>
@@ -127,7 +156,7 @@ const EmployeesPage = () => {
             Please click on "Edit" to find more details of each employee
           </p>
           <button
-            className={styles.employeesList__addButton}
+            className={styles.employeesList__button}
             onClick={handleAddEmployee}
           >
             Add employee
@@ -137,11 +166,27 @@ const EmployeesPage = () => {
 
       <div className={styles.employeesList__navBar}>
         <button
-          className={styles.employeesList__addButton}
+          className={styles.employeesList__button}
           onClick={handleGetAllEmployees}
         >
           All Employees
         </button>
+
+        <div>
+          <button
+            onClick={() => setOpenFilterModal(true)}
+            className={styles.employeesList__button}
+          >
+            Filter by Status
+          </button>
+          <FilterModal
+            openFilterModal={openFilterModal}
+            closeModal={() => setOpenFilterModal(false)}
+            status={employmentStatus}
+            onStatusChange={handleStatusChange}
+            handleFilter={handleFilter}
+          />
+        </div>
 
         <SearchBar />
       </div>
