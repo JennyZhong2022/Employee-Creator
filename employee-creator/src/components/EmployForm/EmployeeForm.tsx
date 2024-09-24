@@ -2,7 +2,7 @@ import { schema, EmployeeFormData } from "./schema";
 import styles from "./EmployeeForm.module.scss";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import React from "react";
+import React, { useEffect } from "react";
 
 interface EmployeeFormProps {
   formType: "create" | "edit";
@@ -29,10 +29,9 @@ const EmployeeForm = ({ onSubmit, formType, employee }: EmployeeFormProps) => {
   });
 
   const isOngoing = watch("onGoing");
-
   const employmentBasis = watch("employmentBasis");
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (employmentBasis === "Full-time") {
       setValue("hoursPerWeek", 38);
     } else {
