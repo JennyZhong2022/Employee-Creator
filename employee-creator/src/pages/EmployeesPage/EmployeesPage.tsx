@@ -3,6 +3,7 @@ import {
   deleteEmployeeById,
   EmployeeResponse,
   getAllEmployees,
+  searchForEmployeeByFilter,
   searchForEmployeeName,
   searchForEmployeeNameByEmployeeStatus,
 } from "../../services/employee";
@@ -23,9 +24,12 @@ const EmployeesPage = () => {
   const navigate = useNavigate();
   const [employees, setEmployees] = useState<EmployeeResponse[]>([]);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
-
   const [openFilterModal, setOpenFilterModal] = useState(false);
+
+  const [name, setName] = useState<string>("");
   const [employmentStatus, setEmploymentStatus] = useState<string>("");
+  const [employmentBasis, setEmploymentBasis] = useState<string>("");
+
   const dispatch: AppDispatch = useDispatch();
   const searchTerm = useSelector((state: RootState) => state.search.searchTerm);
   const [searchedEmployees, setSearchedEmployees] = useState<
@@ -48,6 +52,7 @@ const EmployeesPage = () => {
     getAllEmployees()
       .then((data) => {
         setEmployees(data);
+        setLoading(false);
       })
       .catch((e) => {
         console.error("Failed to fetch all employees", e);
@@ -127,27 +132,37 @@ const EmployeesPage = () => {
     navigate("/add-employee");
   };
 
-  const handleStatusChange = (e: any): void => {
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setName(e.target.value);
+  };
+
+  const handleStatusChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setEmploymentStatus(e.target.value);
   };
 
+  const handleBasisChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setEmploymentBasis(e.target.value);
+  };
+
   const handleFilter = () => {
-    if (!employmentStatus || employmentStatus === "") {
-      handleGetAllEmployees(); // Reset to show all if 'All' is selected
-    } else {
-      setLoading(true);
-      setError(null);
-      searchForEmployeeNameByEmployeeStatus(employmentStatus)
-        .then((data) => {
-          setEmployees(data);
-          setLoading(false);
-        })
-        .catch((e) => {
-          console.error("Failed to fetch employees by status", e);
-          setError(`Can't find employees with status "${employmentStatus}"`);
-          setLoading(false);
-        });
-    }
+    setLoading(true);
+    setError(null);
+
+    searchForEmployeeByFilter(
+      name.trim() !== "" ? name.trim() : undefined,
+      employmentStatus !== "" ? employmentStatus : undefined,
+      employmentBasis !== "" ? employmentBasis : undefined
+    )
+      .then((data) => {
+        setEmployees(data);
+        setLoading(false);
+      })
+      .catch((e) => {
+        console.error("Failed to fetch employees by filters", e);
+        setError("Failed to find employees with the provided filters.");
+        setLoading(false);
+      });
+
     setOpenFilterModal(false);
   };
 
@@ -170,12 +185,6 @@ const EmployeesPage = () => {
 
       <div className={styles.employeesList__navBar}>
         <SearchBar />
-        <button
-          className={styles.employeesList__button}
-          onClick={handleGetAllEmployees}
-        >
-          All Employees
-        </button>
 
         <div>
           <button
@@ -187,11 +196,22 @@ const EmployeesPage = () => {
           <FilterModal
             openFilterModal={openFilterModal}
             closeModal={() => setOpenFilterModal(false)}
+            name={name}
+            onNameChange={handleNameChange}
             status={employmentStatus}
             onStatusChange={handleStatusChange}
+            basis={employmentBasis}
+            onBasisChange={handleBasisChange}
             handleFilter={handleFilter}
           />
         </div>
+
+        <button
+          className={styles.employeesList__button}
+          onClick={handleGetAllEmployees}
+        >
+          All Employees
+        </button>
       </div>
       {loading && (
         <div className={styles.employeesList__loading}>

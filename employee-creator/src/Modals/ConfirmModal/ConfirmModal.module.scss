@@ -1,3 +1,5 @@
+// ConfirmModal.module.scss
+
 .confirmModal {
   background: white;
   padding: 20px;
@@ -8,6 +10,23 @@
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+
+  @media screen and (max-width: 480px) {
+    padding: 15px;
+    width: 90%; // Use percentage for better responsiveness on very small screens
+    border-radius: 8px;
+
+    h2 {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+  }
 }
 
 .confirmModalOverlay {
@@ -21,6 +40,14 @@
 
 .confirmModalActions {
   margin-top: 20px;
+  display: flex;
+  justify-content: center;
+
+  @media screen and (max-width: 480px) {
+    flex-direction: column;
+    gap: 10px; // Add space between buttons when stacked vertically
+    margin-top: 15px;
+  }
 
   .cancelBtn,
   .confirmBtn {
@@ -29,14 +56,36 @@
     border-radius: 5px;
     cursor: pointer;
     margin: 0 10px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+
+    @media screen and (max-width: 480px) {
+      width: 100%; // Make buttons full width on small screens
+      margin: 0; // Remove horizontal margin
+      font-size: 0.95rem;
+      padding: 8px 0;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+    }
   }
 
-  .cancelBn {
+  .cancelBtn {
     background-color: #ccc;
+    color: #333;
+
+    &:hover {
+      background-color: #b3b3b3;
+    }
   }
 
   .confirmBtn {
     background-color: #d9534f;
     color: white;
+
+    &:hover {
+      background-color: #c9302c;
+    }
   }
 }

@@ -138,14 +138,14 @@ const EmployeeForm = ({ onSubmit, formType, employee }: EmployeeFormProps) => {
                 />
                 Contract
               </label>
-              <label>
+              {/* <label>
                 <input
                   type="radio"
                   {...register("employeeStatus")}
                   value="Casual"
                 />
                 Casual
-              </label>
+              </label> */}
             </div>
             {errors.employeeStatus && (
               <small className={styles.error_text}>

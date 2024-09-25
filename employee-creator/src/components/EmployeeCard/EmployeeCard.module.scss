@@ -1,5 +1,8 @@
 .employeeCardContainer {
   padding: 0 50px;
+  @media screen and (max-width: 480px) {
+    padding: 0 30px;
+  }
 
   .employeeCard {
     font-family: Arial, sans-serif;

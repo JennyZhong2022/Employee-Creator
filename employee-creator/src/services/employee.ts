@@ -144,3 +144,22 @@ export const searchForEmployeeNameByEmployeeStatus = async (status: string) => {
     throw new Error(`Failed to search employee with status: + ${status}"`);
   }
 };
+
+export const searchForEmployeeByFilter = async (
+  name?: string,
+  status?: string,
+  basis?: string
+): Promise<EmployeeResponse[]> => {
+  try {
+    const params: any = {};
+    if (name && name.trim() !== "") params.name = name.trim();
+    if (status && status.trim() !== "") params.status = status.trim();
+    if (basis && basis.trim() !== "") params.basis = basis.trim();
+
+    const response = await axios.get(`${baseURL}/employees/filter`, { params });
+    return response.data as EmployeeResponse[];
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to search employees with the provided filters.");
+  }
+};

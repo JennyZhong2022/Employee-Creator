@@ -1,20 +1,30 @@
 import Modal from "react-modal";
 import styles from "./FilterModal.module.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 interface FilterModalProps {
   openFilterModal: boolean;
   closeModal: () => void;
-  onStatusChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  name: string;
+  onNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  status: string;
+  onStatusChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  basis: string;
+  onBasisChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleFilter: () => void;
-  status?: string;
 }
 
 const FilterModal = ({
   openFilterModal,
   closeModal,
+  name,
+  onNameChange,
   status,
-  handleFilter,
   onStatusChange,
+  basis,
+  onBasisChange,
+  handleFilter,
 }: FilterModalProps) => {
   return (
     <Modal
@@ -25,61 +35,122 @@ const FilterModal = ({
       contentLabel="Employee Status Filter"
       ariaHideApp={false} // Required to avoid accessibility warnings
     >
-      <h2>Filter Employees by Status</h2>
-      <form className={styles.filterContent}>
-        <label className={styles.radioLabel}>
-          <input
-            type="radio"
-            value=""
-            name="employeeStatus"
-            checked={status === ""}
-            onChange={onStatusChange}
-          />
-          All
-        </label>
+      <button onClick={closeModal} className={styles.closeButton}>
+        <FontAwesomeIcon icon={faTimes} />
+      </button>
+      <h2 className={styles.modalTitle}>Filters</h2>
 
-        <label className={styles.radioLabel}>
+      <form
+        className={styles.filterForm}
+        onSubmit={(e) => {
+          e.preventDefault(); // Prevent default form submission
+          handleFilter();
+        }}
+      >
+        {/* Name Filter */}
+        <div className={styles.searchForm}>
+          <label htmlFor="filter-name">Name:</label>
           <input
-            type="radio"
-            value="Permanent"
-            name="employeeStatus"
-            checked={status === "Permanent"}
-            onChange={onStatusChange}
+            id="filter-name"
+            type="text"
+            value={name}
+            onChange={onNameChange}
+            className={styles.searchInput}
+            placeholder="Enter employee name"
           />
-          Permanent
-        </label>
+        </div>
 
-        <label className={styles.radioLabel}>
-          <input
-            type="radio"
-            value="Contract"
-            name="employeeStatus"
-            checked={status === "Contract"}
-            onChange={onStatusChange}
-          />
-          Contract
-        </label>
+        {/* Employment Status Filter */}
+        <div className={styles.filterSection}>
+          <h4>Employment Status</h4>
+          <div className={styles.filterContent}>
+            <label className={styles.radioLabel} htmlFor="status-all">
+              <input
+                type="radio"
+                id="status-all"
+                value=""
+                name="employeeStatus"
+                checked={status === ""}
+                onChange={onStatusChange}
+              />
+              All Status
+            </label>
 
-        <label className={styles.radioLabel}>
-          <input
-            type="radio"
-            value="Casual"
-            name="employeeStatus"
-            checked={status === "Casual"}
-            onChange={onStatusChange}
-          />
-          Casual
-        </label>
+            <label className={styles.radioLabel} htmlFor="status-permanent">
+              <input
+                type="radio"
+                id="status-permanent"
+                value="Permanent"
+                name="employeeStatus"
+                checked={status === "Permanent"}
+                onChange={onStatusChange}
+              />
+              Permanent
+            </label>
+
+            <label className={styles.radioLabel} htmlFor="status-contract">
+              <input
+                type="radio"
+                id="status-contract"
+                value="Contract"
+                name="employeeStatus"
+                checked={status === "Contract"}
+                onChange={onStatusChange}
+              />
+              Contract
+            </label>
+          </div>
+        </div>
+
+        {/* Employment Basis Filter */}
+        <div className={styles.filterSection}>
+          <h4>Employment Basis</h4>
+          <div className={styles.filterContent}>
+            <label className={styles.radioLabel} htmlFor="basis-all">
+              <input
+                type="radio"
+                id="basis-all"
+                value=""
+                name="employmentBasis"
+                checked={basis === ""}
+                onChange={onBasisChange}
+              />
+              All Basis
+            </label>
+
+            <label className={styles.radioLabel} htmlFor="basis-full-time">
+              <input
+                type="radio"
+                id="basis-full-time"
+                value="Full-Time"
+                name="employmentBasis"
+                checked={basis === "Full-Time"}
+                onChange={onBasisChange}
+              />
+              Full-Time
+            </label>
+
+            <label className={styles.radioLabel} htmlFor="basis-part-time">
+              <input
+                type="radio"
+                id="basis-part-time"
+                value="Part-Time"
+                name="employmentBasis"
+                checked={basis === "Part-Time"}
+                onChange={onBasisChange}
+              />
+              Part-Time
+            </label>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className={styles.filterModalActions}>
+          <button type="submit" className={styles.confirmBtn}>
+            Apply Filter
+          </button>
+        </div>
       </form>
-
-      <div className={styles.filterModalActions}>
-        <button onClick={closeModal} className={styles.cancelBtn}>
-          Cancel
-        </button>
-        <button onClick={handleFilter} className={styles.confirmBtn}>
-          Apply Filter
-        </button>
-      </div>
     </Modal>
   );
 };
