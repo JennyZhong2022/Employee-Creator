@@ -162,7 +162,7 @@ const EmployeesPage = () => {
         setError("Failed to find employees with the provided filters.");
         setLoading(false);
       });
-
+    setName("");
     setOpenFilterModal(false);
   };
 
