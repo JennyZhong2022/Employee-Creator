@@ -18,6 +18,9 @@ $color-text: white;
   font-size: 1rem;
   outline: none;
   background-color: $color-bg;
+  @media screen and (max-width: 480px) {
+    font-size: 0.8rem;
+  }
 
   &:focus {
     border-color: $color-border-focus;
@@ -37,7 +40,9 @@ $color-text: white;
   align-items: center;
   justify-content: center;
   outline: none;
-
+  @media screen and (max-width: 480px) {
+    padding: 0.55rem 0.9rem;
+  }
   &:hover {
     background-color: $color-bg-hover;
   }
