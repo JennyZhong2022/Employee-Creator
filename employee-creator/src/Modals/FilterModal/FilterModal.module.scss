@@ -21,15 +21,21 @@
 
 .filterContent {
   margin: 20px 0;
+  .radioLabel {
+    padding: 5px 10px;
+    input[type="radio"] {
+      margin-right: 5px;
+    }
+  }
 }
 
-.statusSelect {
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-}
+// .statusSelect {
+//   width: 100%;
+//   padding: 10px;
+//   border-radius: 5px;
+//   border: 1px solid #ccc;
+//   font-size: 16px;
+// }
 
 .filterModalActions {
   margin-top: 20px;

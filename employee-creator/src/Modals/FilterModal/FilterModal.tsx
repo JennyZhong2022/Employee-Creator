@@ -4,7 +4,7 @@ import styles from "./FilterModal.module.scss";
 interface FilterModalProps {
   openFilterModal: boolean;
   closeModal: () => void;
-  onStatusChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  onStatusChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleFilter: () => void;
   status?: string;
 }
@@ -26,18 +26,52 @@ const FilterModal = ({
       ariaHideApp={false} // Required to avoid accessibility warnings
     >
       <h2>Filter Employees by Status</h2>
-      <div className={styles.filterContent}>
-        <select
-          value={status}
-          onChange={onStatusChange}
-          className={styles.statusSelect}
-        >
-          <option value="">All</option>
-          <option value="Permanent">Permanent</option>
-          <option value="Contract">Contract</option>
-          <option value="Casual">Casual</option>
-        </select>
-      </div>
+      <form className={styles.filterContent}>
+        <label className={styles.radioLabel}>
+          <input
+            type="radio"
+            value=""
+            name="employeeStatus"
+            checked={status === ""}
+            onChange={onStatusChange}
+          />
+          All
+        </label>
+
+        <label className={styles.radioLabel}>
+          <input
+            type="radio"
+            value="Permanent"
+            name="employeeStatus"
+            checked={status === "Permanent"}
+            onChange={onStatusChange}
+          />
+          Permanent
+        </label>
+
+        <label className={styles.radioLabel}>
+          <input
+            type="radio"
+            value="Contract"
+            name="employeeStatus"
+            checked={status === "Contract"}
+            onChange={onStatusChange}
+          />
+          Contract
+        </label>
+
+        <label className={styles.radioLabel}>
+          <input
+            type="radio"
+            value="Casual"
+            name="employeeStatus"
+            checked={status === "Casual"}
+            onChange={onStatusChange}
+          />
+          Casual
+        </label>
+      </form>
+
       <div className={styles.filterModalActions}>
         <button onClick={closeModal} className={styles.cancelBtn}>
           Cancel

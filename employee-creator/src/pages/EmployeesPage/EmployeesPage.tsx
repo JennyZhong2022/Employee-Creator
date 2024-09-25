@@ -17,6 +17,8 @@ import FilterModal from "../../modals/FilterModal/FilterModal";
 import { AppDispatch, RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchTerm } from "../../redux/searchSlice";
+import { faSliders } from "@fortawesome/free-solid-svg-icons";
+
 const EmployeesPage = () => {
   const navigate = useNavigate();
   const [employees, setEmployees] = useState<EmployeeResponse[]>([]);
@@ -167,6 +169,7 @@ const EmployeesPage = () => {
       </div>
 
       <div className={styles.employeesList__navBar}>
+        <SearchBar />
         <button
           className={styles.employeesList__button}
           onClick={handleGetAllEmployees}
@@ -179,7 +182,7 @@ const EmployeesPage = () => {
             onClick={() => setOpenFilterModal(true)}
             className={styles.employeesList__button}
           >
-            Filter by Status
+            <FontAwesomeIcon icon={faSliders} />
           </button>
           <FilterModal
             openFilterModal={openFilterModal}
@@ -189,8 +192,6 @@ const EmployeesPage = () => {
             handleFilter={handleFilter}
           />
         </div>
-
-        <SearchBar />
       </div>
       {loading && (
         <div className={styles.employeesList__loading}>
