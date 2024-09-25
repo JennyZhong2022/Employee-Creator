@@ -86,4 +86,8 @@ public class EmployeeService {
     return repo.findByEmployeeStatus(status);
   }
 
+  public List<Employee> findEmployeesByFilters(String name, String status, String basis) {
+    return repo.findByOptionalCriteria(name, status, basis);
+  }
+
 }

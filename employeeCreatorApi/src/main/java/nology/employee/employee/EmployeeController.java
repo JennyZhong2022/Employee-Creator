@@ -1,6 +1,7 @@
 package nology.employee.employee;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
@@ -60,6 +61,19 @@ public class EmployeeController {
     List<Employee> employees = this.employeeService.findEmployeesByStatus(status);
     if (employees.isEmpty()) {
       throw new NotFoundException("Couldn't find any employees with status: " + status);
+    }
+    return new ResponseEntity<>(employees, HttpStatus.OK);
+  }
+
+  @GetMapping("/filter")
+  public ResponseEntity<List<Employee>> findEmployeesByFilters(
+      @RequestParam(required = false) String name,
+      @RequestParam(required = false) String status,
+      @RequestParam(required = false) String basis) throws NotFoundException {
+    List<Employee> employees = this.employeeService.findEmployeesByFilters(name, status, basis);
+
+    if (employees.isEmpty()) {
+      throw new NotFoundException("No employees found with the provided filters.");
     }
     return new ResponseEntity<>(employees, HttpStatus.OK);
   }
