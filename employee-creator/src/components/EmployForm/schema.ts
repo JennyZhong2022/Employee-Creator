@@ -43,15 +43,23 @@ export const schema = z.object({
   startYear: z.number().min(1900).max(new Date().getFullYear()),
   finishDay: z.union([
     z.coerce.number().min(1).max(31),
-    z.literal("").transform(() => null),
+    z
+      .literal("")
+      .transform(() => null)
+      .nullable(),
   ]),
-  finishMonth: z.union([monthEnum, z.literal("").transform(() => null)]),
+  finishMonth: z
+    .union([monthEnum, z.literal("").transform(() => null)])
+    .nullable(),
   finishYear: z.union([
     z.coerce
       .number()
       .min(1900)
       .max(new Date().getFullYear() + 100),
-    z.literal("").transform(() => null),
+    z
+      .literal("")
+      .transform(() => null)
+      .nullable(),
   ]),
   onGoing: z.boolean(),
   employmentBasis: z.enum(["Full-time", "Part-time"]),
