@@ -5,7 +5,6 @@ import {
   getAllEmployees,
   searchForEmployeeByFilter,
   searchForEmployeeName,
-  searchForEmployeeNameByEmployeeStatus,
 } from "../../services/employee";
 import EmployeeCard from "../../components/EmployeeCard/EmployeeCard";
 import styles from "./EmployeesPage.module.scss";
@@ -17,24 +16,28 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import FilterModal from "../../modals/FilterModal/FilterModal";
 import { AppDispatch, RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchTerm } from "../../redux/searchSlice";
+import { clearSearchTerm, setSearchTerm } from "../../redux/searchSlice";
 import { faSliders } from "@fortawesome/free-solid-svg-icons";
+import {
+  clearFilters,
+  setBasisFilter,
+  setNameFilter,
+  setStatusFilter,
+} from "../../redux/filterSlice";
 
 const EmployeesPage = () => {
   const navigate = useNavigate();
+  const dispatch: AppDispatch = useDispatch();
+  //redux states
+  const searchTerm = useSelector((state: RootState) => state.search.searchTerm);
+  const { name, employmentStatus, employmentBasis } = useSelector(
+    (state: RootState) => state.filter
+  );
+
+  // local states
   const [employees, setEmployees] = useState<EmployeeResponse[]>([]);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [openFilterModal, setOpenFilterModal] = useState(false);
-
-  const [name, setName] = useState<string>("");
-  const [employmentStatus, setEmploymentStatus] = useState<string>("");
-  const [employmentBasis, setEmploymentBasis] = useState<string>("");
-
-  const dispatch: AppDispatch = useDispatch();
-  const searchTerm = useSelector((state: RootState) => state.search.searchTerm);
-  const [searchedEmployees, setSearchedEmployees] = useState<
-    EmployeeResponse[]
-  >([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedEmployeeId, setSelectedEmployeeId] = useState<number | null>(
@@ -47,59 +50,42 @@ const EmployeesPage = () => {
     string | null
   >(null);
 
-  // Get all employees
+  // get different data depends on request
   useEffect(() => {
-    getAllEmployees()
-      .then((data) => {
-        setEmployees(data);
-        setLoading(false);
-      })
-      .catch((e) => {
-        console.error("Failed to fetch all employees", e);
-        setError("Error fetching all employees");
-        setLoading(false);
-      });
-  }, []);
+    const fetchEmployees = async () => {
+      setLoading(true);
+      setError(null);
 
-  console.log(loading);
+      try {
+        let data: EmployeeResponse[] = [];
+        if (searchTerm) {
+          data = await searchForEmployeeName(searchTerm);
+        } else if (name || employmentStatus || employmentBasis) {
+          data = await searchForEmployeeByFilter(
+            name.trim() !== "" ? name.trim() : undefined,
+            employmentStatus !== "" ? employmentStatus : undefined,
+            employmentBasis !== "" ? employmentBasis : undefined
+          );
+        } else {
+          data = await getAllEmployees();
+        }
+        setEmployees(data);
+      } catch (error) {
+        console.error("Failed to fetch employees", error);
+        setError("Error fetching employees");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchEmployees();
+  }, [searchTerm, name, employmentStatus, employmentBasis]);
 
   const handleGetAllEmployees = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await getAllEmployees();
-      setEmployees(data);
-      setSearchedEmployees([]);
-      dispatch(setSearchTerm(""));
-    } catch (error) {
-      console.error("Failed to fetch all employees", error);
-      setError("Failed to fetch all employees");
-    }
-    setLoading(false);
+    dispatch(clearFilters());
+    dispatch(clearSearchTerm());
   };
 
   console.log("employees", employees);
-
-  // Get searched employees only when searchTerm is not empty
-  useEffect(() => {
-    if (searchTerm) {
-      setLoading(true);
-      setError(null);
-      searchForEmployeeName(searchTerm)
-        .then((data) => {
-          setSearchedEmployees(data);
-          setLoading(false);
-        })
-        .catch((e) => {
-          console.error("Failed to fetch employees", e);
-          setError(`Can't find the employee "${searchTerm}"`);
-          setLoading(false);
-        });
-    }
-  }, [searchTerm]);
-
-  const employeesToShow =
-    searchTerm && searchedEmployees.length > 0 ? searchedEmployees : employees;
 
   const handleDelete = (id: number, firstName: string, lastName: string) => {
     setSelectedEmployeeFirstName(firstName);
@@ -132,37 +118,14 @@ const EmployeesPage = () => {
     navigate("/add-employee");
   };
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setName(e.target.value);
-  };
-
-  const handleStatusChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setEmploymentStatus(e.target.value);
-  };
-
-  const handleBasisChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setEmploymentBasis(e.target.value);
-  };
-
-  const handleFilter = () => {
-    setLoading(true);
-    setError(null);
-
-    searchForEmployeeByFilter(
-      name.trim() !== "" ? name.trim() : undefined,
-      employmentStatus !== "" ? employmentStatus : undefined,
-      employmentBasis !== "" ? employmentBasis : undefined
-    )
-      .then((data) => {
-        setEmployees(data);
-        setLoading(false);
-      })
-      .catch((e) => {
-        console.error("Failed to fetch employees by filters", e);
-        setError("Failed to find employees with the provided filters.");
-        setLoading(false);
-      });
-    setName("");
+  const handleApplyFilters = (
+    newName: string,
+    newStatus: string,
+    newBasis: string
+  ) => {
+    dispatch(setNameFilter(newName));
+    dispatch(setStatusFilter(newStatus));
+    dispatch(setBasisFilter(newBasis));
     setOpenFilterModal(false);
   };
 
@@ -197,12 +160,9 @@ const EmployeesPage = () => {
             openFilterModal={openFilterModal}
             closeModal={() => setOpenFilterModal(false)}
             name={name}
-            onNameChange={handleNameChange}
-            status={employmentStatus}
-            onStatusChange={handleStatusChange}
-            basis={employmentBasis}
-            onBasisChange={handleBasisChange}
-            handleFilter={handleFilter}
+            employmentStatus={employmentStatus}
+            employmentBasis={employmentBasis}
+            onApplyFilters={handleApplyFilters}
           />
         </div>
 
@@ -225,7 +185,7 @@ const EmployeesPage = () => {
       )}
       {!loading &&
         !error &&
-        employeesToShow.map((employee) => (
+        employees.map((employee) => (
           <EmployeeCard
             employee={employee}
             key={employee.id}

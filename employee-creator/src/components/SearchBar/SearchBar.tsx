@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "./SearchBar.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +12,10 @@ const SearchBar = () => {
   const searchTerm = useSelector((state: RootState) => state.search.searchTerm);
 
   const [inputValue, setInputValue] = useState<string>("");
+
+  useEffect(() => {
+    setInputValue(searchTerm);
+  }, [searchTerm]);
 
   const handleSubmit = (e: any): void => {
     e.preventDefault();

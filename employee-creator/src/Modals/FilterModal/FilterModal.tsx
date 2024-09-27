@@ -1,3 +1,6 @@
+// src/modals/FilterModal/FilterModal.tsx
+
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import styles from "./FilterModal.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,25 +10,37 @@ interface FilterModalProps {
   openFilterModal: boolean;
   closeModal: () => void;
   name: string;
-  onNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  status: string;
-  onStatusChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  basis: string;
-  onBasisChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleFilter: () => void;
+  employmentStatus: string;
+  employmentBasis: string;
+  onApplyFilters: (name: string, status: string, basis: string) => void;
 }
 
 const FilterModal = ({
   openFilterModal,
   closeModal,
   name,
-  onNameChange,
-  status,
-  onStatusChange,
-  basis,
-  onBasisChange,
-  handleFilter,
+  employmentStatus,
+  employmentBasis,
+  onApplyFilters,
 }: FilterModalProps) => {
+  const [localName, setLocalName] = useState<string>(name);
+  const [localStatus, setLocalStatus] = useState<string>(employmentStatus);
+  const [localBasis, setLocalBasis] = useState<string>(employmentBasis);
+
+  // default the past inputs when the modal open again
+  useEffect(() => {
+    if (openFilterModal) {
+      setLocalName(name);
+      setLocalStatus(employmentStatus);
+      setLocalBasis(employmentBasis);
+    }
+  }, [openFilterModal, name, employmentStatus, employmentStatus]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onApplyFilters(localName, localStatus, localBasis);
+  };
+
   return (
     <Modal
       isOpen={openFilterModal}
@@ -40,21 +55,15 @@ const FilterModal = ({
       </button>
       <h2 className={styles.modalTitle}>Filters</h2>
 
-      <form
-        className={styles.filterForm}
-        onSubmit={(e) => {
-          e.preventDefault(); // Prevent default form submission
-          handleFilter();
-        }}
-      >
+      <form className={styles.filterForm} onSubmit={handleSubmit}>
         {/* Name Filter */}
         <div className={styles.searchForm}>
-          <label htmlFor="filter-name">Name:</label>
+          <label htmlFor="name">Name:</label>
           <input
-            id="filter-name"
+            id="name"
             type="text"
-            value={name}
-            onChange={onNameChange}
+            value={localName}
+            onChange={(e) => setLocalName(e.target.value)}
             className={styles.searchInput}
             placeholder="Enter employee name"
           />
@@ -70,8 +79,8 @@ const FilterModal = ({
                 id="status-all"
                 value=""
                 name="employeeStatus"
-                checked={status === ""}
-                onChange={onStatusChange}
+                checked={localStatus === ""}
+                onChange={(e) => setLocalStatus(e.target.value)}
               />
               All Status
             </label>
@@ -82,8 +91,8 @@ const FilterModal = ({
                 id="status-permanent"
                 value="Permanent"
                 name="employeeStatus"
-                checked={status === "Permanent"}
-                onChange={onStatusChange}
+                checked={localStatus === "Permanent"}
+                onChange={(e) => setLocalStatus(e.target.value)}
               />
               Permanent
             </label>
@@ -94,8 +103,8 @@ const FilterModal = ({
                 id="status-contract"
                 value="Contract"
                 name="employeeStatus"
-                checked={status === "Contract"}
-                onChange={onStatusChange}
+                checked={localStatus === "Contract"}
+                onChange={(e) => setLocalStatus(e.target.value)}
               />
               Contract
             </label>
@@ -112,8 +121,8 @@ const FilterModal = ({
                 id="basis-all"
                 value=""
                 name="employmentBasis"
-                checked={basis === ""}
-                onChange={onBasisChange}
+                checked={localBasis === ""}
+                onChange={(e) => setLocalBasis(e.target.value)}
               />
               All Basis
             </label>
@@ -124,8 +133,8 @@ const FilterModal = ({
                 id="basis-full-time"
                 value="Full-Time"
                 name="employmentBasis"
-                checked={basis === "Full-Time"}
-                onChange={onBasisChange}
+                checked={localBasis === "Full-Time"}
+                onChange={(e) => setLocalBasis(e.target.value)}
               />
               Full-Time
             </label>
@@ -136,15 +145,14 @@ const FilterModal = ({
                 id="basis-part-time"
                 value="Part-Time"
                 name="employmentBasis"
-                checked={basis === "Part-Time"}
-                onChange={onBasisChange}
+                checked={localBasis === "Part-Time"}
+                onChange={(e) => setLocalBasis(e.target.value)}
               />
               Part-Time
             </label>
           </div>
         </div>
 
-        {/* Action Buttons */}
         <div className={styles.filterModalActions}>
           <button type="submit" className={styles.confirmBtn}>
             Apply Filter
