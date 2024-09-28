@@ -17,6 +17,7 @@ export interface EmployeeResponse {
   onGoing: boolean;
   employmentBasis: "Full-time" | "Part-time";
   hoursPerWeek: number | null;
+  createdAt: string | number | Date;
 }
 
 export function transformEmployeeData(

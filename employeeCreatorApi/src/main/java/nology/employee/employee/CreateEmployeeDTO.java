@@ -2,9 +2,15 @@ package nology.employee.employee;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Date;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
@@ -49,24 +55,11 @@ public class CreateEmployeeDTO {
 
   private LocalDate startDate;
 
-  // public void setStartDate(Integer day, String month, Integer year) {
-  // this.startDate = LocalDate.of(year, Month.valueOf(month.toUpperCase()), day);
-  // }
-
   private Integer finishDay;
 
   private String finishMonth;
 
   private Integer finishYear;
-
-  // public void setFinishDate(Integer day, String month, Integer year) {
-  // if (day != null && month != null && year != null) {
-  // this.finishDate = LocalDate.of(year, Month.valueOf(month.toUpperCase()),
-  // day);
-  // } else {
-  // this.finishDate = null; // Handle partial or null input gracefully
-  // }
-  // }
 
   private void updateStartDate() {
     if (startDay != null && startMonth != null && startYear != null) {
@@ -102,6 +95,8 @@ public class CreateEmployeeDTO {
     updateStartDate();
   }
 
+  private LocalDate finishDate; // no validation needed
+
   private void updateFinishDate() {
     if (finishDay != null && finishMonth != null && finishYear != null) {
       finishDate = LocalDate.of(finishYear, Month.valueOf(finishMonth.toUpperCase()), finishDay);
@@ -136,8 +131,6 @@ public class CreateEmployeeDTO {
     this.finishYear = finishYear;
     updateFinishDate();
   }
-
-  private LocalDate finishDate; // no validation needed
 
   private Boolean onGoing;
 

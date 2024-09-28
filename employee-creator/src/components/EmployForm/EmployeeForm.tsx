@@ -238,6 +238,7 @@ const EmployeeForm = ({ onSubmit, formType, employee }: EmployeeFormProps) => {
                   id="finishMonth"
                   disabled={isOngoing}
                 >
+                  <option value="">Select month</option>
                   <option value="January">January</option>
                   <option value="February">February</option>
                   <option value="March">March</option>

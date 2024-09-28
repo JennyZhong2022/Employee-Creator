@@ -69,6 +69,10 @@ const EmployeesPage = () => {
         } else {
           data = await getAllEmployees();
         }
+        data.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
         setEmployees(data);
       } catch (error) {
         console.error("Failed to fetch employees", error);
