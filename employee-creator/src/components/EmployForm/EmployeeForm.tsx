@@ -2,7 +2,7 @@ import { schema, EmployeeFormData } from "./schema";
 import styles from "./EmployeeForm.module.scss";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 interface EmployeeFormProps {
   formType: "create" | "edit";
@@ -219,11 +219,7 @@ const EmployeeForm = ({ onSubmit, formType, employee }: EmployeeFormProps) => {
               <div className={styles.dateField}>
                 <label htmlFor="finishDay">Day</label>
                 <input
-                  {...register("finishDay", {
-                    // valueAsNumber: true,
-                    // setValueAs: (v) =>
-                    //   isOngoing ? null : v === "" ? null : Number(v),
-                  })}
+                  {...register("finishDay", {})}
                   id="finishDay"
                   type="number"
                   disabled={isOngoing}
@@ -232,9 +228,7 @@ const EmployeeForm = ({ onSubmit, formType, employee }: EmployeeFormProps) => {
               <div className={styles.dateField}>
                 <label htmlFor="finishMonth">Month</label>
                 <select
-                  {...register("finishMonth", {
-                    // setValueAs: (v) => (isOngoing ? null : v),
-                  })}
+                  {...register("finishMonth", {})}
                   id="finishMonth"
                   disabled={isOngoing}
                 >
@@ -256,11 +250,7 @@ const EmployeeForm = ({ onSubmit, formType, employee }: EmployeeFormProps) => {
               <div className={styles.dateField}>
                 <label htmlFor="finishYear">Year</label>
                 <input
-                  {...register("finishYear", {
-                    // valueAsNumber: true,
-                    // setValueAs: (v) =>
-                    //   isOngoing ? null : v === "" ? null : Number(v),
-                  })}
+                  {...register("finishYear", {})}
                   id="finishYear"
                   type="number"
                   disabled={isOngoing}

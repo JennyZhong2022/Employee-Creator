@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   deleteEmployeeById,
   EmployeeResponse,
@@ -16,7 +16,7 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import FilterModal from "../../modals/FilterModal/FilterModal";
 import { AppDispatch, RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { clearSearchTerm, setSearchTerm } from "../../redux/searchSlice";
+import { clearSearchTerm } from "../../redux/searchSlice";
 import { faSliders } from "@fortawesome/free-solid-svg-icons";
 import {
   clearFilters,
