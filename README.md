@@ -1,9 +1,15 @@
 # Employee-Creator
 
+## Description
+
+The Employee-Creator project is a full-stack application designed to manage employee data effectively. Built with a modern tech stack, including React,Redux, TypeScript, and Java Spring, this application provides a user-friendly interface for performing CRUD operations on employee records. Users can easily create, read, update, and delete employee information, as well as search through records efficiently.
+
+The project also emphasizes a robust validation system using react-hook-form and Zod, ensuring that user input is accurate and error-free. With a responsive design, the application offers a seamless experience across various devices, from desktops to mobile phones. Furthermore, the backend is deployed on cloud services like AWS and Azure, demonstrating the application’s adaptability and scalability in a cloud environment.
+
 
 ## Demo
 
-- Here's a link to a live demo of the Task Tracking System:[Live Demo](http://jennytodo-list.s3-website-ap-southeast-2.amazonaws.com/)
+
   ![Demo](./front-end/src/assets/demo.gif)
 
 ---
@@ -73,4 +79,5 @@ The purpose of this project includes:
 
 ## Conclusion
 
+In conclusion, the Employee-Creator project serves as a comprehensive platform for managing employee data while showcasing the capabilities of modern web technologies. It not only fulfills its functional requirements but also addresses critical aspects of user experience, such as validation and responsiveness. The challenges faced during development, particularly in cloud deployment and form validation, have provided valuable learning experiences that will contribute to future projects. 
 
