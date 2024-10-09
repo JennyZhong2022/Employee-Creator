@@ -76,7 +76,7 @@ const EmployeesPage = () => {
         setEmployees(data);
       } catch (error) {
         console.error("Failed to fetch employees", error);
-        setError("Error fetching employees");
+        setError("No matched name found.");
       } finally {
         setLoading(false);
       }
