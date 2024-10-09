@@ -8,7 +8,7 @@ The project also emphasizes a robust validation system using react-hook-form and
 
 ## Demo
 
-![Demo](./front-end/src/assets/demo.gif)
+![Demo](employee-creator/src/assets/demo.gif)
 
 ---
 
