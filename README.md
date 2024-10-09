@@ -6,11 +6,9 @@ The Employee-Creator project is a full-stack application designed to manage empl
 
 The project also emphasizes a robust validation system using react-hook-form and Zod, ensuring that user input is accurate and error-free. With a responsive design, the application offers a seamless experience across various devices, from desktops to mobile phones. Furthermore, the backend is deployed on cloud services like AWS and Azure, demonstrating the application’s adaptability and scalability in a cloud environment.
 
-
 ## Demo
 
-
-  ![Demo](./front-end/src/assets/demo.gif)
+![Demo](./front-end/src/assets/demo.gif)
 
 ---
 
@@ -35,7 +33,7 @@ The purpose of this project includes:
 - **Unit Test**: Ensured backend and front end methods and functions run successfully through unit testing.
 - **CI/CD**: Used GitHub to automate test execution.
 - **Adaptive**: Ensuring a responsive layout that works across various devices and screen sizes.
-- **Cloud technology**: Using AWS/Azure to deploy backend, frontend and connect to Azure SQL database. 
+- **Cloud technology**: Using AWS/Azure to deploy backend, frontend and connect to Azure SQL database.
 
 ---
 
@@ -51,7 +49,7 @@ The purpose of this project includes:
 - **Backend**: Java, Spring
 - **Database**: MySQL
 - **Unit Test**:com.h2database, mockito, vitest
-- **Cloud technology**: AWS/Azure 
+- **Cloud technology**: AWS/Azure
 - **Others**: React-Hook-Form
 
 ## Features
@@ -60,15 +58,18 @@ The purpose of this project includes:
 - **Alert Validation Messages on Forms**: Set validation by using react-hook-form with a Zod schema to define your validation rules. This allows you to provide clear and concise error messages to users when their input fails validation, improving the overall user experience and ensuring that form submissions meet the required criteria.
 - **Responsive Design**: Fully responsive layout that adjusts to desktops, tablets, and mobile phones.
 
+## <img src="employee-creator/src/assets/demoresponsive1.jpg" alt="responsive image" width="200"/>
 
+## <img src="employee-creator/src/assets/demoresponsive2.jpg" alt="responsive image" width="200"/>
+
+## <img src="employee-creator/src/assets/demoresponsive3.jpg" alt="responsive image" width="200"/>
 
 ## Challenges
 
-- **Validation Messages on Forms**: Set validation by using react-hook-form with a Zod schema to define your validation rules. When onGoing is clicked, need to set finishdate can be nullable. 
-- **Deploy on Cloud**: After researching Azure, I connected my local database to Azure SQL Database and deployed the backend using Azure CLI commands to copy the JAR file from my GitHub repository.  I also used GitHub CI/CD workflows on Azure for deploying the frontend.
+- **Validation Messages on Forms**: Set validation by using react-hook-form with a Zod schema to define your validation rules. When onGoing is clicked, need to set finishdate can be nullable.
+- **Deploy on Cloud**: After researching Azure, I connected my local database to Azure SQL Database and deployed the backend using Azure CLI commands to copy the JAR file from my GitHub repository. I also used GitHub CI/CD workflows on Azure for deploying the frontend.
 
 ---
-
 
 ## Future Goals
 
@@ -79,5 +80,4 @@ The purpose of this project includes:
 
 ## Conclusion
 
-In conclusion, the Employee-Creator project serves as a comprehensive platform for managing employee data while showcasing the capabilities of modern web technologies. It not only fulfills its functional requirements but also addresses critical aspects of user experience, such as validation and responsiveness. The challenges faced during development, particularly in cloud deployment and form validation, have provided valuable learning experiences that will contribute to future projects. 
-
+In conclusion, the Employee-Creator project serves as a comprehensive platform for managing employee data while showcasing the capabilities of modern web technologies. It not only fulfills its functional requirements but also addresses critical aspects of user experience, such as validation and responsiveness. The challenges faced during development, particularly in cloud deployment and form validation, have provided valuable learning experiences that will contribute to future projects.
